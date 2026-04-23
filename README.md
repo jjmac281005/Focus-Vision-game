@@ -1,5 +1,8 @@
 # Focus Point - Eye Therapy Vision Training
 
+![CI](https://github.com/USERNAME/REPO/actions/workflows/ci.yml/badge.svg)
+![Coverage](https://img.shields.io/badge/coverage-63%25-brightgreen)
+
 Aplikasi web untuk terapi penglihatan menggunakan webcam dan deteksi gaze berbasis MediaPipe. Terdiri dari 3 game:
 
 - **Pencil Push-Up** — Latihan koordinasi mata dengan mengikuti objek bergerak
@@ -93,4 +96,42 @@ Browser ──SocketIO──▶ Flask Server ──Thread──▶ Game Engine
 ```bash
 pip install pytest numpy
 pytest tests/ -v
+```
+
+## Strategi Pengujian
+
+Pengujian pada aplikasi ini dibagi menjadi dua jenis:
+
+### 1. Unit Testing
+
+Digunakan untuk menguji logika bisnis secara terpisah, terutama pada:
+
+- Service layer (UserService)
+- Validasi dan proses penyimpanan data
+- State management game
+
+Unit test menggunakan mock untuk mensimulasikan database sehingga tidak bergantung pada sistem eksternal.
+
+### 2. Integration Testing
+
+Digunakan untuk menguji interaksi antar komponen, terutama:
+
+- Endpoint Flask (login, register, save score)
+- Interaksi antara route dan database (menggunakan mock)
+
+### Tools yang digunakan
+
+- pytest
+- unittest.mock
+- pytest-cov
+
+### Coverage
+
+Pengujian dilakukan dengan target minimal 60% coverage.  
+Beberapa modul seperti engine game (OpenCV & MediaPipe) tidak diikutkan dalam coverage karena bersifat real-time dan sulit untuk diuji secara unit.
+
+### Menjalankan Test dengan Coverage
+
+```bash
+pytest --cov=. --cov-report=term-missing
 ```
