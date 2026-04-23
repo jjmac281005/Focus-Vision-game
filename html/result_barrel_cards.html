@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Game Result</title>
+<link rel="stylesheet" href="css/result.css">
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <!-- BACK -->
+    <div class="back">
+        <a href="/dashboard" class="back-link">
+            <img src="icon/Icon_Back.png" class="back-icon" alt="back">
+            Back to Games
+        </a>
+    </div>
+
+    <!-- GAME INFO -->
+    <div class="card game-info">
+
+        <div class="icon-box">
+            <img src="icon/Icon_BarrelCards.png" class="game-icon">
+        </div>
+
+        <div class="game-text">
+            <h3>Barrel Cards</h3>
+            <p>
+              Focus on barrel shapes to improve eye convergence, divergence,
+              and binocular coordination.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-container">
+
+        <!-- Difficulty -->
+        <div class="card stat-box">
+            <h4>Difficulty</h4>
+
+            <div class="levels">
+                <span class="level active">Level 1</span>
+                <span class="level">Level 2</span>
+                <span class="level">Level 3</span>
+                <span class="level">Level 4</span>
+                <span class="level">Level 5</span>
+            </div>
+        </div>
+
+        <!-- Score (🔥 DINAMIS) -->
+        <div class="card stat-box center">
+            <h4>Score</h4>
+            <div class="big" id="finalScore">0</div>
+        </div>
+
+        <!-- Time -->
+        <div class="card stat-box center">
+            <h4>Time</h4>
+            <div class="big" id="time">0:00</div>
+        </div>
+
+    </div>
+
+    <!-- RESULT -->
+    <div class="card result-box">
+
+        <h2>Game Completed!</h2>
+        <p class="subtitle">
+            Congratulations!<br>
+            You have completed Barrel Cards.
+        </p>
+
+        <div class="actions">
+            <button class="btn primary">Next Level</button>
+            <button class="btn outline">Restart</button>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ========================= -->
+<!-- 🔥 SCRIPT UTAMA -->
+<!-- ========================= -->
+<script>
+
+// ambil score dari URL
+const params = new URLSearchParams(window.location.search);
+const score = params.get("score");
+
+// tampilkan score
+if (score) {
+    document.getElementById("finalScore").innerText = score;
+}
+
+// (optional) dummy time
+document.getElementById("time").innerText = "0:45";
+
+// tombol back
+function goBack() {
+    window.location.href = "/games2";
+}
+
+// tombol restart
+function restartGame() {
+    window.location.href = "/start_game_barrel_cards";
+}
+
+// tombol next level (sementara)
+function nextLevel() {
+    alert("Next level coming soon 🚀");
+}
+
+</script>
+
+</body>
+</html>

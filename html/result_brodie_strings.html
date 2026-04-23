@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Game Result</title>
+<link rel="stylesheet" href="css/result.css">
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <!-- BACK -->
+    <div class="back">
+        <a href="/dashboard" class="back-link">
+            <img src="icon/Icon_Back.png" class="back-icon" alt="back">
+            Back to Games
+        </a>
+    </div>
+
+    <!-- GAME INFO -->
+    <div class="card game-info">
+
+        <div class="icon-box">
+            <img src="icon/Icon_BordieStrings.png" class="game-icon">
+        </div>
+
+        <div class="game-text">
+            <h3>Brodie Strings</h3>
+            <p>Focus on beads along a string to train eye alignment, convergence, and depth perception.</p>
+        </div>
+
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-container">
+
+        <!-- Difficulty -->
+        <div class="card stat-box">
+            <h4>Difficulty</h4>
+
+            <div class="levels">
+                <span class="level active">Level 1</span>
+                <span class="level">Level 2</span>
+                <span class="level">Level 3</span>
+                <span class="level">Level 4</span>
+                <span class="level">Level 5</span>
+            </div>
+        </div>
+
+        <!-- Score -->
+        <div class="card stat-box center">
+            <h4>Score</h4>
+            <div class="big" id="score-value">0</div>
+        </div>
+
+        <!-- Time -->
+        <div class="card stat-box center">
+            <h4>Time</h4>
+            <div class="big" id="time-value">0</div>
+        </div>
+
+    </div>
+
+    <!-- RESULT -->
+    <div class="card result-box">
+
+        <h2>Game Completed!</h2>
+        <p class="subtitle">Congratulations!<br>You have completed Brodie Strings.</p>
+
+        <div class="actions">
+          <button id="next-btn" class="btn primary">Next Level</button>
+          <button id="restart-btn" class="btn outline">Restart</button>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    // ambil score & time dari URL
+    const score = getQueryParam("score") || 0;
+    const time = getQueryParam("time") || 60;
+
+    document.getElementById("score-value").textContent = score;
+
+    // format jadi mm:ss
+    let minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+    document.getElementById("time-value").textContent =
+        minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+    
+    const restartBtn = document.querySelector(".btn.outline");
+      const nextBtn = document.querySelector(".btn.primary");
+
+      function restartGame() {
+          // arahkan ke halaman start game
+          window.location.href = "/start_game_bordie_strings";
+      }
+
+    document.getElementById("restart-btn").addEventListener("click", restartGame);
+    document.getElementById("next-btn").addEventListener("click", restartGame);
+</script>
+
+</body>
+</html>

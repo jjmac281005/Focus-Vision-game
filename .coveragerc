@@ -1,0 +1,5 @@
+[run]
+omit =
+    services/barrel_cards.py
+    services/brodie_string_game.py
+    services/pencil_pushup.py

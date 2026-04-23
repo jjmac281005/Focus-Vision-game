@@ -1,0 +1,43 @@
+name: CI - Test & Coverage
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Ambil code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Setup Python
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flask flask-socketio mysql-connector-python werkzeug
+          pip install pytest pytest-cov
+
+      # 4. Jalankan test + coverage
+      - name: Run tests
+        run: |
+          pytest --cov=. --cov-report=term-missing
+
+      # 5. (Opsional) Simpan coverage HTML
+      - name: Generate coverage HTML
+        run: |
+          pytest --cov=. --cov-report=html
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: htmlcov/

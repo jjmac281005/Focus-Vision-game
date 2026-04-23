@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Brodie String</title>
+<link rel="stylesheet" href="css/playgame.css">
+<style>
+    #webcam-feed {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        border-radius: 12px;
+    }
+    .game-area {
+        background-color: #b9c9d8;
+        overflow: hidden;
+        position: relative;
+    }
+    #start-overlay {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0,0,0,0.5);
+        z-index: 10;
+        border-radius: 12px;
+    }
+    #start-btn {
+        padding: 16px 48px;
+        font-size: 22px;
+        font-weight: bold;
+        background: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+    }
+    #start-btn:hover { background: #45a049; }
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+    <div class="card">
+        <div class="top-section">
+            <div class="left">
+                <h2>Brodie String</h2>
+                <div class="buttons">
+                    <button class="btn" id="pause-btn">
+                        <img src="icon/Pause.png" class="pause-icon"> Pause
+                    </button>
+
+                    <button class="btn" id="reset-btn">
+                        <img src="icon/Reset.png" class="reset-icon"> Reset
+                    </button>
+                </div>
+            </div>
+            <div class="right">
+                <div class="user">Welcome, {{username}}</div>
+                <div class="score">Score : 0</div>
+                <div id="timer">Time : 60</div>
+            </div>
+        </div>
+
+        <!-- Game Area -->
+        <div class="game-area">
+            <div id="start-overlay">
+                <button id="start-btn">&#9654; Start Game</button>
+            </div>
+            <img id="webcam-feed" alt="Webcam Feed">
+        </div>
+
+        <div class="instructions">
+            <ul>
+                <li>Focus on one bead at a time.</li>
+                <li>Maintain focus until the image appears clear</li>
+                <li>Practice for 3-5 minutes daily for best results</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js"></script>
+<script>
+    const socket = io();
+    let gameStarted = false;
+    let isPaused = false;
+    let timeLeft = 60;
+    let timerInterval = null;
+
+    function startTimer() {
+        const timerEl = document.getElementById("timer");
+
+        timerInterval = setInterval(function () {
+
+            if (!isPaused && gameStarted) {
+                timeLeft--;
+                timerEl.textContent = "Time : " + timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+
+                    // 🔥 stop game
+                    socket.emit("reset_brodie");
+
+                    window.location.href = "result_brodie_strings.html?score=" + score + "&time=" + (60 - timeLeft);
+                }
+            }
+
+        }, 1000);
+    }
+
+    socket.on("score_update", function(data) {
+        document.querySelector(".score").textContent = "Score : " + data.score;
+    });
+
+    socket.on("game_over", function(data) {
+        if (gameStarted) {
+            clearInterval(timerInterval); // 🔥 penting
+            window.location.href = "result_brodie_strings.html?score=" + data.score;
+        }
+    });
+
+    document.getElementById("start-btn").addEventListener("click", function() {
+        document.getElementById("start-overlay").style.display = "none";
+        gameStarted = true;
+        document.querySelector(".score").textContent = "Score : 0";
+
+        // 🔥 RESET TIMER DULU
+        timeLeft = 60;
+        clearInterval(timerInterval);
+        startTimer();  // 🔥 INI YANG KURANG
+
+        socket.emit("start_brodie", {
+            email: "{{ session['user'] }}"
+        });
+
+        setTimeout(function() {
+            document.getElementById("webcam-feed").src = "/video_feed/brodie?" + Date.now();
+        }, 300);
+    });
+
+    document.getElementById("pause-btn").addEventListener("click", function () {
+    if (!gameStarted) return;
+
+    isPaused = !isPaused;
+
+    socket.emit("pause_brodie", {
+        paused: isPaused
+    });
+
+    if (isPaused) {
+        this.innerHTML = '<img src="icon/icon_play.png" class="pause-icon"> Resume';
+    } else {
+        this.innerHTML = '<img src="icon/Pause.png" class="pause-icon"> Pause';
+    }
+    });
+
+    document.getElementById("reset-btn").addEventListener("click", function () {
+
+        socket.emit("reset_brodie");
+
+        clearInterval(timerInterval); // 🔥 penting
+
+        gameStarted = false;
+        isPaused = false;
+        timeLeft = 60;
+
+        // reset UI
+        document.querySelector(".score").textContent = "Score : 0";
+        document.getElementById("timer").textContent = "Time : 60";
+
+        document.getElementById("webcam-feed").src = "";
+        document.getElementById("start-overlay").style.display = "flex";
+
+        document.getElementById("pause-btn").innerHTML =
+            '<img src="icon/Pause.png" class="pause-icon"> Pause';
+    });
+</script>
+
+</body>
+</html>

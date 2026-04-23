@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Focus Point - Profile</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Main CSS (navbar dll) -->
+    <link href="css/main.css" rel="stylesheet" />
+
+    <!-- Profile CSS -->
+    <link rel="stylesheet" href="css/profile.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body
+    style="background: #f5f7fb; font-family: &quot;Montserrat&quot;, sans-serif"
+  >
+    <!-- NAVBAR (SAMA KAYAK HOME2) -->
+    <div class="container-fluid sticky-top bg-white shadow-sm">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light py-3">
+          <a class="navbar-brand">
+            <img src="icon/logo.png" style="height: 40px" />
+          </a>
+
+          <button
+            class="navbar-toggler"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav ms-auto align-items-center">
+              <a href="/home2" class="nav-link">Home</a>
+              <a href="/games2" class="nav-link">Games</a>
+              <a href="/dashboard" class="nav-link">Dashboard</a>
+
+              <!-- PROFILE -->
+              <div class="ms-3 d-flex align-items-center">
+                <a
+                  href="/profile"
+                  class="ms-3 d-flex align-items-center text-decoration-none text-dark"
+                >
+                  <img src="icon/Profilee.png" class="profile-img" />
+                  <span class="ms-2 fw-semibold">{{ username }}</span></a>
+                
+                <!-- LOGOUT BUTTON -->
+                <a href="/logout" class="ms-3">
+                  <img src="icon/icon_logout.png" class="logout-icon" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <main class="content-wrapper">
+      <aside class="sidebar">
+        <div class="side-item active">
+          <a href="/profile">
+            <img src="icon/profil.png" alt="Profile" />
+          </a>
+        </div>
+        <div class="side-item">
+          <a href="/notification">
+            <img src="icon/notif.png" alt="Notification" />
+          </a>
+        </div>
+        <div class="side-item">
+          <a href="/privacy">
+            <img src="icon/privacy.png" alt="Security" />
+          </a>
+        </div>
+      </aside>
+
+      <section class="profile-card">
+        <div class="card-header">
+          <h1>Profile</h1>
+          <div class="avatar-wrapper">
+            <img
+              src="icon/gambarprofile.png"
+              alt="User Avatar"
+              class="user-avatar"
+            />
+          </div>
+        </div>
+
+        <form class="profile-form" method="POST" action="/profile">
+
+          {% if error %}
+          <p style="color:red; margin-bottom:10px;">{{ error }}</p>
+          {% endif %}
+
+          {% if success %}
+          <p style="color:green; margin-bottom:10px;">{{ success }}</p>
+          {% endif %}
+
+          <div class="input-grid">
+            
+            <div class="input-group">
+              <label>Username</label>
+              <input type="text" name="username" value="{{ user.username }}" />
+            </div>
+
+            <div class="input-group">
+              <label>Email</label>
+              <input type="email" value="{{ user.email }}" readonly />
+            </div>
+
+          </div>
+
+          <div class="form-action">
+            <button type="submit" class="save-btn">Save Changes</button>
+          </div>
+
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

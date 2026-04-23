@@ -1,0 +1,171 @@
+body{
+    margin:0;
+    font-family:"Segoe UI", sans-serif;
+    background:#f5f6f8;
+}
+
+/* WRAPPER */
+.wrapper{
+    width:1100px;
+    margin:auto;
+    padding:40px;
+}
+
+/* BACK */
+.back {
+  margin: 10px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.back-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Hover effect */
+.back-link:hover {
+  text-decoration: underline;
+  transform: translateX(-3px);
+  transition: 0.2s;
+}
+
+/* CARD */
+.card{
+    background:#fff;
+    border:2px solid #d6dce5;
+    border-radius:16px;
+    padding:25px;
+    margin-bottom:25px;
+}
+
+/* GAME INFO */
+.game-info{
+    display:flex;
+    align-items:center;
+}
+
+.icon-box{
+    width:60px;
+    height:60px;
+    border-radius:12px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-right:20px;
+}
+
+.game-icon{
+    width:28px;
+}
+
+.game-text h3{
+    margin:0;
+}
+
+.game-text p{
+    margin-top:5px;
+    color:#666;
+}
+
+/* STATS */
+.stats-container{
+    display:flex;
+    gap:20px;
+}
+
+/* STAT BOX */
+.stat-box{
+    flex:1;
+}
+
+.stat-box h4{
+    margin-bottom:15px;
+    text-align: center;
+}
+
+.center{
+    text-align:center;
+}
+
+/* LEVELS */
+.levels{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.level{
+    border:1px solid #b8c7dc;
+    padding:6px 12px;
+    border-radius:8px;
+    font-size:13px;
+    color:#555;
+}
+
+.level.active{
+    background:#a8c4e6;
+    color:#fff;
+    border:none;
+}
+
+/* BIG TEXT */
+.big{
+    font-size:36px;
+    font-weight:600;
+    color:#555;
+}
+
+/* RESULT */
+.result-box{
+    text-align:center;
+}
+
+.result-box h2{
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:#777;
+    margin-bottom:20px;
+}
+
+/* BUTTON */
+.actions{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 25px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+}
+
+.primary {
+  background: #a8c4e6;
+  color: white;
+}
+
+.outline {
+  border: 2px solid #b8c7dc;
+  background: white;
+}
+
+.primary:hover{
+    background:#8fb1db;
+}
+
+.outline:hover{
+    background:#f2f5fa;
+}
