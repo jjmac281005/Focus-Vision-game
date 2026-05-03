@@ -1,6 +1,6 @@
 # Focus Point - Eye Therapy Vision Training
 
-![CI](https://github.com/jjmac281005/https://github.com/jjmac281005/Focus-Vision-game.git/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/jjmac281005/Focus-Vision-game.git/actions/workflows/ci.yml/badge.svg)
 ![Coverage](https://img.shields.io/badge/coverage-79%25-brightgreen)
 
 Aplikasi web untuk terapi penglihatan menggunakan webcam dan deteksi gaze berbasis MediaPipe. Terdiri dari 3 game:
