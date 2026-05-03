@@ -187,3 +187,71 @@ def test_profile_duplicate_username(client):
     })
 
     assert b"Username sudah digunakan" in response.data
+
+def mock_logged_in_user(client):
+    mock_db = client.application.config["DB"]
+    cursor = mock_db.cursor.return_value
+    cursor.fetchone.return_value = {"username": "testuser"}
+
+def test_logout(client):
+    with client.session_transaction() as sess:
+        sess["user"] = "test@mail.com"
+
+    response = client.get("/logout")
+
+    assert response.status_code == 302
+
+def test_about(client):
+    mock_logged_in_user(client)
+
+    with client.session_transaction() as sess:
+        sess["user"] = "test@mail.com"
+
+    response = client.get("/about")
+    assert response.status_code == 200
+
+def test_games2(client):
+    mock_logged_in_user(client)
+
+    with client.session_transaction() as sess:
+        sess["user"] = "test@mail.com"
+
+    response = client.get("/games2")
+
+    assert response.status_code == 200
+
+def test_notification(client):
+    mock_logged_in_user(client)
+
+    with client.session_transaction() as sess:
+        sess["user"] = "test@mail.com"
+
+    response = client.get("/notification")
+
+    assert response.status_code == 200
+
+def test_home2(client):
+    mock_logged_in_user(client)
+
+    with client.session_transaction() as sess:
+        sess["user"] = "test@mail.com"
+
+    response = client.get("/home2")
+
+    assert response.status_code == 200
+
+def test_privacy_get(client):
+    mock_db = client.application.config["DB"]
+    cursor = mock_db.cursor.return_value
+
+    cursor.fetchone.side_effect = [
+        {"email": "test@mail.com", "password": "hashed"},
+        {"username": "testuser"}
+    ]
+
+    with client.session_transaction() as sess:
+        sess["user"] = "test@mail.com"
+
+    response = client.get("/privacy")
+
+    assert response.status_code == 200
